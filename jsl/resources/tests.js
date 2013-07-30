@@ -163,3 +163,36 @@ test("Use the Boolean object to convert null, NaN and undefined to false", funct
     ok(boolWrapper == false && myNaN != false);
 
 });
+
+test("Octal literals begin with '0'", function () {
+   var myOctal = 077;
+   ok(myOctal != undefined)
+});
+
+
+test("Hex literals begin with '0x'", function () {
+   var myHex = -0x7BA;
+    ok(myHex != undefined);
+});
+
+test("Floating point literals begin with can have decimal points and 'E' for exponents", function () {
+   var myFloat = -3.12E-12;
+   ok(myFloat != undefined);
+});
+
+test("Object literals are lists of property and object pairs", function () {
+
+  var myFunc = function(number) {return number * 10};
+  var myFlatObjectLiteral = {firstName: "Dog",secondName: 10, thirdName: myFunc(2) };
+  var myNestedObjectLiteral = {firstName : {dog1: "Jess", dog2: "Louis"}, TopDog : "Stan"};
+   for (var key in myFlatObjectLiteral)
+   {
+       var theObject = myFlatObjectLiteral[key];
+       console.log("The object: " + theObject);
+       console.log("The property name: " + key);
+   }
+
+   ok(myNestedObjectLiteral.firstName.dog2 == "Louis");
+
+});
+
