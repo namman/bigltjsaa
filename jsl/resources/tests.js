@@ -137,3 +137,29 @@ test("Functions close over variables in scope at the time they were created, not
 });
 
 
+test("Array literals", function () {
+   var myArray = ["Dog","Cat","Fish"];
+
+    ok(myArray[1] == "Cat");
+    ok(myArray.length == 3);
+});
+
+
+test("Empty elements in array literals are undefined", function() {
+     var myArray = ["Dog", , "Cat"];
+     ok(myArray[1] == undefined)
+})  ;
+
+test("Trailing commas in array literals are ignored", function() {
+     var myArray = ['Dog','Cat',];
+    ok(myArray.length == 2);
+})  ;
+
+test("Use the Boolean object to convert null, NaN and undefined to false", function () {
+   var myNaN = NaN;
+    var myUndefined = undefined;
+    var myNull = null;
+    var boolWrapper = new Boolean(myNaN && myUndefined && myNull);
+    ok(boolWrapper == false && myNaN != false);
+
+});
