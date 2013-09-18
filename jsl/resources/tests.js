@@ -193,6 +193,37 @@ test("Object literals are lists of property and object pairs", function () {
    }
 
    ok(myNestedObjectLiteral.firstName.dog2 == "Louis");
+});
+
+test("The strict equal operator returns true if the operands are equal and have the same type", function () {
+    var string10 = "10";
+    var int10 = 10;
+    var anotherInt10 = 10
+    ok(string10 == int10);
+    ok(string10 !== int10);
+    ok(anotherInt10 === int10);
+
+});
+
+test("Divide by zero produces infinity", function () {
+  var shouldBeInfinity = 10/0;
+  ok(shouldBeInfinity == Infinity);
+    ok(shouldBeInfinity === Infinity);
+});
+
+
+test("Javascript has ternary opeartory", function () {
+    var age = 17;
+    var desc = age < 18 ? "minor" : "adult";
+    ok(desc == "minor")
+
+});
+
+test("Delete operator deletes an object, property or removes an element from an array", function () {
+   var myObj = new Number();
+   ok(myObj != undefined);
+   var successFullyDeleted = delete myObj;
+    console.log("Successfully deleted: " + successFullyDeleted);
 
 });
 
