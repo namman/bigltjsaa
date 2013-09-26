@@ -212,18 +212,55 @@ test("Divide by zero produces infinity", function () {
 });
 
 
-test("Javascript has ternary opeartory", function () {
+test("Javascript has ternary operator", function () {
     var age = 17;
     var desc = age < 18 ? "minor" : "adult";
     ok(desc == "minor")
 
 });
 
-test("Delete operator deletes an object, property or removes an element from an array", function () {
+test("Delete operator deletes an object, property or removes an element from an array, but does not work with explicitly defined variables", function () {
+    // does not work to delete object that is defined with var
    var myObj = new Number();
-   ok(myObj != undefined);
    var successFullyDeleted = delete myObj;
-    console.log("Successfully deleted: " + successFullyDeleted);
+    ok(successFullyDeleted == false);
+
 
 });
+
+test("Delete an element in an array", function () {
+   var trees = new Array("Oak","Elm","Birch");
+    delete trees[1];
+    ok(trees[1] == undefined);
+    console.log("Length after delete: " + trees.length);
+    ok(trees.length == 3);
+
+
+});
+
+test("Delete a user defined property", function () {
+   mobj = new Number();
+    mobj.h = 10;
+   var result =     delete mobj.h;
+    ok(result);
+});
+
+test("The 'in' operator returns true if the specified property is in the specified object", function () {
+    var trees = new Array("birch","oak","fig","lemon","pine");
+    ok(1 in trees);
+    ok(!(10 in trees)); // out of range
+    ok("length" in trees); // length is an array property
+    var myCar = {"make" : "Ford", "model": "Kruger", "year": 2009};
+    ok("make" in myCar);
+});
+
+test("Javascript can display unicode literals", function () {
+    var x = "\u00B2";
+    console.log(x);
+    ok(true);
+});
+
+
+
+
 
