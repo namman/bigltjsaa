@@ -195,6 +195,12 @@ test("Object literals are lists of property and object pairs", function () {
    ok(myNestedObjectLiteral.firstName.dog2 == "Louis");
 });
 
+test("Javascript can display unicode literals", function () {
+    var x = "\u00B2";
+    console.log(x);
+    ok(true);
+});
+
 test("The strict equal operator returns true if the operands are equal and have the same type", function () {
     var string10 = "10";
     var int10 = 10;
@@ -254,11 +260,16 @@ test("The 'in' operator returns true if the specified property is in the specifi
     ok("make" in myCar);
 });
 
-test("Javascript can display unicode literals", function () {
-    var x = "\u00B2";
-    console.log(x);
-    ok(true);
+test("The 'instanceOf' operator returns true of the specified object is of the specified type", function () {
+   var myDate = new Date(2010,12,17);
+    ok(myDate instanceof Date);
+    var myString = new String("my string");
+    ok(myString instanceof String);
+    var myStringLiteral = "my implicit string";
+    ok((myStringLiteral instanceof String) == false);
 });
+
+
 
 
 
