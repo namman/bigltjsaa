@@ -247,7 +247,7 @@ test("Delete an element in an array", function () {
 test("Delete a user defined property", function () {
    mobj = new Number();
     mobj.h = 10;
-   var result =     delete mobj.h;
+   var result = delete mobj.h;
     ok(result);
 });
 
@@ -260,6 +260,7 @@ test("The 'in' operator returns true if the specified property is in the specifi
     ok("make" in myCar);
 });
 
+
 test("The 'instanceOf' operator returns true of the specified object is of the specified type", function () {
    var myDate = new Date(2010,12,17);
     ok(myDate instanceof Date);
@@ -270,8 +271,24 @@ test("The 'instanceOf' operator returns true of the specified object is of the s
 });
 
 
+test("The 'typeof' operator returns a string indicating the type of the operand", function () {
+   var myFunction = new Function("5 + 2");
+   ok(typeof(myFunction) == 'function');
+   ok(typeof(true) == 'boolean');
+    ok(typeof(null) == 'object');
+});
 
 
+test("Javascript has regular expression literals and returns the regex group matches in an array", function () {
 
+    var myRegexLiteral = /Javascript\s(Rulez)?\s(OK)?\s(pal\?)/;
+    var myString = "Javascript Rulez OK pal?";
+    var match = myRegexLiteral.exec(myString);
+    ok(match[0] == "Javascript Rulez OK pal?"); // whole string matched
+    ok(match[1] == "Rulez"); // first substring
+    ok(match[2] == "OK");
+    ok(match[3] == "pal?");
+
+});
 
 
