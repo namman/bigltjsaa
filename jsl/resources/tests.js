@@ -292,3 +292,70 @@ test("Javascript has regular expression literals and returns the regex group mat
 });
 
 
+//STATEMENTS
+
+test("Javascript does not have block scope: variables inside a block leak out", function () {
+
+
+    var outsideBlock = 10;
+    if (outsideBlock == 10) {
+        var insideBlock = 99;
+    }
+
+    ok(insideBlock == 99);
+});
+
+test("Javascript has switch statements", function () {
+
+    var animal = "CAT";
+
+    function getSound() {
+    switch (animal)
+        {
+        case "CAT":
+            return "meow";
+            break;
+        case "DOG":
+            return "woof";
+            break;
+        case "PIDGIN":
+            return "gobble";
+            break;
+        default:
+            return "something else";
+            break;
+        }
+
+
+    }
+    ok(getSound() == "meow");
+});
+
+test("You can label statements so you can break them from an inner scope", function () {
+
+    // inner loop cancels outer look
+
+
+    var x = 0;
+    var z = 0
+    labelForOuterLoop: while (true) {
+        console.log("Outer loops: " + x);
+        x += 1;
+        z = 1;
+        while (true) {
+            console.log("Inner loops: " + z);
+            z += 1;
+            if (z === 10 && x === 10) {
+                break labelForOuterLoop;
+            } else if (z === 10) {
+                break;
+            }
+        }
+    }
+
+    ok(x == 10 && z == 10);
+});
+
+
+
+
