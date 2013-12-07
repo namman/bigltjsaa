@@ -331,7 +331,7 @@ test("Javascript has switch statements", function () {
     ok(getSound() == "meow");
 });
 
-test("You can label statements so you can break them from an inner scope", function () {
+test("You can label statements so you can break to them from an inner scope", function () {
 
     // inner loop cancels outer look
 
@@ -355,6 +355,71 @@ test("You can label statements so you can break them from an inner scope", funct
 
     ok(x == 10 && z == 10);
 });
+
+test("'for in' iteraters through the names of properties of an object, not their values", function () {
+   var testObject = {model: "Ford", color: "Blue", cost: "$20,000"};
+    for (var prop in testObject)
+    {
+        console.log(prop);
+    }
+
+    expect(0);
+
+});
+
+test("Use 'for' to iterate through the values of an object", function () {
+    var sum = 0;
+    var obj = {prop1: 5, prop2: 13, prop3: 8};
+
+    for (var key in obj)
+    {
+       var item = obj[key];
+        if (obj.hasOwnProperty(key))
+        {
+            sum += item;
+        }
+    }
+    ok(sum == 26);
+
+});
+
+test("Exceptions can be any expression", function () {
+
+    // function to create an exception
+    function UserException(message){
+        this.message = message;
+        this.name = "UserException"
+    }
+
+    UserException.prototype.toString = function() {return this.name + ': "' + this.message + '"'}
+
+    throws(
+        function() {throw new UserException()},UserException,"throws user exception"
+    )
+
+    try {
+        throw new UserException("test exception")
+    }
+    catch (e) {
+       ok(e.message == "test exception")
+    }
+    finally {
+        console.log("code in finally clause executes regardless of whether an exception is thrown")
+    }
+
+
+});
+
+test("Can define multiple variables on one line, initialising some only", function () {
+
+    var myCar = {make: "Honda", model: "Accord"}, x,y;
+    ok(x == undefined)
+
+
+});
+
+
+
 
 
 
