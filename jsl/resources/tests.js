@@ -23,11 +23,10 @@ test("Strings with signs in front of them are Numbers after all!", function () {
 
 test("ParseInt() rounds down", function () {
     var result = parseInt("77.7");
-    console.log(result);
     ok(result == 77)
 });
 
-test("ParseFloat() works", function () {
+test("ParseFloat() parses float", function () {
     var r = parseFloat("77.7");
     ok(r == 77.7);
 });
@@ -35,7 +34,6 @@ test("ParseFloat() works", function () {
 test("Undefined is false in a boolean context", function () {
     var r = undefined;
     ok(!r)
-
 });
 
 
@@ -44,12 +42,12 @@ test("Array elements that don't exist are undefined", function () {
     ok(myArray[99] == undefined)
 });
 
-
 test("An undefined variable converts to NaN when used in a numeric context", function () {
     var u = undefined;
     var num = 7;
     var numericContext = num + u;
     ok(isNaN(numericContext));
+    ok(isNaN(u));
 });
 
 test("Null values evaluate to zero in a numeric context", function () {
@@ -69,9 +67,10 @@ test("There is no statement block scope", function () {
 test("The '==' operator does type conversion where as the '===' operator does not", function () {
     var a = "3";
     var b = 3;
-    ok(a == b);
-    ok(a !== b);
-    ok(!(a === b));
+    ok(a == b);  // converts to int
+    ok(a !== b);  // does not convert to int
+    ok(!(a != b)); // does not convert
+    ok(!(a === b)); // does not convert
 });
 
 test("Ordinarily referring to variables not yet declared gives an exception.", function () {
@@ -94,19 +93,19 @@ test("Functions can ordinarily access variables outside their scope, even if dec
     };
     var outsideScope = 20;
     ok(f() == 20)
-
 });
 
 test("Define variables at the top of functions, otherwise hoisting will give you an undefined value instead of a ReferenceError.", function () {
 
-    var result;
     var f = function () {
         result = a;
+        return a;
         var a = 20;
     };
     ok(f() == undefined)
 
 });
+
 
 
 test("Consts cannot be reassigned", function () {
@@ -129,7 +128,15 @@ test("Functions close over variables in scope at the time they were created, not
 
     ok(innerFromOuter() == 20);
 
+    var closesOver = function()
+    {
+       return n * 2;
+    }
+    var n = 20; // still in scope even though defined afterwards
+    ok(closesOver() == 40);
+
 });
+
 
 
 test("Array literals", function () {
@@ -197,10 +204,11 @@ test("Javascript can display unicode literals", function () {
     ok(true);
 });
 
-test("The strict equal operator returns true if the operands are equal and have the same type", function () {
+test("The strict equal operator '===' returns true if the operands are equal and have the same type", function () {
     var string10 = "10";
     var int10 = 10;
     var anotherInt10 = 10
+    ok(!(string10 != int10));
     ok(string10 == int10);
     ok(string10 !== int10);
     ok(anotherInt10 === int10);
@@ -560,4 +568,28 @@ test("Fibonacci function with memoization", function () {
 
 });
 
+test("Functions can return functions", function () {
 
+    var funcWhichReturnsFunc = function(n) {
+        return function(n)
+        {
+            return n * 2;
+        }
+    };
+
+    var result = funcWhichReturnsFunc(10);
+    ok(typeof result == 'function');
+});
+
+test("Functions can create functions, execute them and return the result - put braces right after function definition.", function () {
+    var funcWhichCreatesFuncAndExecutesIt = function(n)
+    {
+        return function(n)
+        {
+            return n * 2;
+        }
+    }();
+
+    var result = funcWhichCreatesFuncAndExecutesIt(10);
+    ok(result == 20);
+});
